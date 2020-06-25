@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse
 # Django settings for sample_app project.
 
 DEBUG = True
@@ -170,5 +170,5 @@ LOGGING = {
     }
 }
 
-LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_REDIRECT_URL = reverse('home')
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'

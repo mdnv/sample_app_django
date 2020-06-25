@@ -6,7 +6,7 @@ from django.utils import html
 from microposts.models import Micropost
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.PROTECT)
     followers = models.ManyToManyField(User,
                                        related_name='followed_users',
                                        symmetrical=False,

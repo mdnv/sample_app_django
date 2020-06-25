@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Micropost(models.Model):
     content = models.TextField(max_length=140)
-    user = models.ForeignKey(User, editable=False)
+    user = models.ForeignKey(User, editable=False, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
