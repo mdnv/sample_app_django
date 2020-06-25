@@ -13,9 +13,32 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from django.contrib import admin
+# from django.urls import path
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+# ]
+
+
+
+
+# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+admin.autodiscover()
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    '',
+    path(r'^users/(?P<username>\w+)', include('accounts.views.show'), name='user'),
+    path(r'^accounts/', include('accounts.urls')),
+    path(r'^microposts/', include('microposts.urls')),
+    path(r'^$', include('microposts.views.home'), name='home'),
+    path(r'', include('static_pages.urls')),
+
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # Uncomment the next line to enable the admin:
+    path(r'^admin/', include(admin.site.urls)),
 ]

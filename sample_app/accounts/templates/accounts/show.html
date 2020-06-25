@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.get_full_name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        {{ user.get_profile.gravatar|safe }}
+        {{ user.get_full_name }}
+      </h1>
+      <span>&nbsp;</span>
+      <span>{{ microposts.paginator.count }} microposts</span>
+    </section>
+    <section>
+      {% include "_stats.html" %}
+    </section>
+  </aside>
+  <div class="span8">
+    {% if button %}
+    <div id="follow_form">
+      {% if button == "follow" %}
+      <form action="{% url follow_user user.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-large btn-primary" name="follow" value="Follow" />
+      </form>
+      {% else %}
+      <form action="{% url unfollow_user user.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-large" name="unfollow" value="Unfollow" />
+      </form>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="span8">
+    <h3>Microposts ({{ microposts.paginator.count }})</h3>
+    <ol class="microposts">
+      {% for m in microposts %}
+      <li>
+        <span class="content">{{ m.content }}</span>
+        <span class="timestamp">Posted {{ m.created_at|timesince }} ago</span>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <div class="pagination">
+      <span class="step-links">
+        {% if microposts.has_previous %}
+        <a href="?page={{ microposts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ microposts.number }} of {{ microposts.paginator.num_pages }}
+        </span>
+
+        {% if microposts.has_next %}
+        <a href="?page={{ microposts.next_page_number }}">next</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+</div>
+{% endblock %}

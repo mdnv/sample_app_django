@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        {{ user.get_profile.gravatar|safe }}
+        {{ user.get_full_name }}
+      </h1>
+      <span><a href="{% url user user.username %}">view my profile</a></span>
+      <span>{{ user.micropost_set.count }} microposts</span>
+    </section>
+    <section>
+      {% include "_stats.html" %}
+      <div class="user_avatars">
+        {% for u in users %}
+        <a href="{% url user u.username %}">{{ u.get_profile.gravatar_small|safe }}</a>
+        {% endfor %}
+      </div>
+    </section>
+  </aside>
+
+  <div class="span8">
+    <h3>{{ title }} ({{ users.paginator.count }})</h3>
+    <ul class="users">
+      {% for u in users %}
+      <li>
+        <a href="{% url user u.username %}">
+          {{ u.get_profile.gravatar|safe }}
+          {{ u.get_full_name }}
+        </a> 
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div class="pagination">
+      <span class="step-links">
+        {% if users.has_previous %}
+        <a href="?page={{ users.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ users.number }} of {{ users.paginator.num_pages }}
+        </span>
+
+        {% if users.has_next %}
+        <a href="?page={{ users.next_page_number }}">next</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+</div>
+{% endblock %}

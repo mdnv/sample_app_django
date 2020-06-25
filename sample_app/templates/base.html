@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tutorial Sample App | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'application.css' %}" type="text/css" media="all" />
+    {% include "_shim.html" %}
+  </head>
+  <body>
+    {% include "_header.html" %}
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+    {% include "_footer.html" %}
+    <script type="text/javascript" src="{% static 'jquery-1.7.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+  </body>
+</html>
