@@ -4,7 +4,7 @@ from django.conf.urls import *
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns(
+urlpatterns = urlpatterns(
     '',
     url(r'^users/(?P<username>\w+)', 'accounts.views.show', name='user'),
     url(r'^accounts/', include('accounts.urls')),
